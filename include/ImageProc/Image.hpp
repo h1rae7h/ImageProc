@@ -3,7 +3,6 @@
 
 #include <cstdint>
 #include <vector>
-#include <fstream>
 
 
 inline constexpr uint16_t defaultWidth = 32;
@@ -18,8 +17,8 @@ struct RGB {
 		: r(r), g(g), b(b) {}
 	
 	RGB &operator=(Grayscale right);
-	bool operator==(RGB right);
-	bool operator!=(RGB right);
+	bool operator==(RGB right) const;
+	bool operator!=(RGB right) const;
 
 	Grayscale getGrayscale();
 
@@ -31,11 +30,11 @@ inline RGB &RGB::operator=(Grayscale right) {
 	return *this;
 }
 
-inline bool RGB::operator==(RGB right) {
+inline bool RGB::operator==(RGB right) const {
 	return r == right.r && g == right.g && b == right.b;
 }
 
-inline bool RGB::operator!=(RGB right) {
+inline bool RGB::operator!=(RGB right) const {
 	return r != right.r || g != right.g || b != right.b;
 }
 
@@ -54,8 +53,8 @@ struct RGBA : public RGB {
 	
 	RGBA &operator=(Grayscale right);
 	RGBA &operator=(RGB right);
-	bool operator==(RGBA right);
-	bool operator!=(RGBA right);
+	bool operator==(RGBA right) const;
+	bool operator!=(RGBA right) const;
 
 	uint8_t a;
 };
@@ -74,11 +73,11 @@ inline RGBA &RGBA::operator=(RGB right) {
 	return *this;
 }
 
-inline bool RGBA::operator==(RGBA right) {
+inline bool RGBA::operator==(RGBA right) const {
 	return r == right.r && g == right.g && b == right.b && a == right.a;
 }
 
-inline bool RGBA::operator!=(RGBA right) {
+inline bool RGBA::operator!=(RGBA right) const {
 	return r != right.r || g != right.g || b != right.b || a != right.a;
 }
 

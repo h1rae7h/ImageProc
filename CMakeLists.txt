@@ -1,23 +1,23 @@
 cmake_minimum_required(VERSION 4.3)
 
-project(IMGLib
+project(ImageProc
 	LANGUAGES CXX
 	VERSION 0.1
-	DESCRIPTION "Image formats read and write library"
+	DESCRIPTION "Image formats processing library"
 )
 
-FILE(GLOB_RECURSE IMGLIB_SOURCES "src/*.cpp")
-FILE(GLOB_RECURSE IMGLIB_HEADERS "include/*.hpp")
-
-add_library(imglib STATIC
-	${IMGLIB_SOURCES}
-)
-target_include_directories(imglib PUBLIC
-	$<BUILD_INTERFACE:${IMGLib_SOURCE_DIR}/include>
+add_library(ImageProc INTERFACE)
+target_include_directories(ImageProc INTERFACE
+	$<BUILD_INTERFACE:${ImageProc_SOURCE_DIR}/include>
 	$<INSTALL_INTERFACE:${CMAKE_INSTALL_PREFIX}/include>
 )
 
-install(FILES ${IMGLIB_HEADERS} DESTINATION include)
-install(TARGETS imglib EXPORT IMGLibTargets DESTINATION lib)
-install(EXPORT IMGLibTargets DESTINATION lib/cmake/IMGLib)
-install(FILES cmake/IMGLib.cmake DESTINATION lib/cmake/IMGLib)
+install(DIRECTORY include/ImageProc DESTINATION include)
+install(TARGETS ImageProc EXPORT ImageProcTargets)
+install(EXPORT ImageProcTargets DESTINATION lib/cmake/ImageProc)
+install(FILES cmake/ImageProcConfig.cmake DESTINATION lib/cmake/ImageProc)
+
+add_executable(writetga
+	src/examples/writetga.cpp
+)
+target_link_libraries(writetga PRIVATE ImageProc)
